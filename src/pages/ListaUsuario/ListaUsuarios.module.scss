@@ -1,0 +1,49 @@
+/* src/pages/ListaUsuario/ListaUsuarios.module.scss */
+
+.listaUsuarios {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    color: black;
+    background-color: #f4f4f4; /* Fundo suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 800px; /* Limita a largura */
+    margin: 30px auto; /* Centraliza o conteúdo */
+  }
+  
+  .listaUsuarios h2 {
+    text-align: center; /* Centraliza o título */
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Cor mais escura para o título */
+  }
+  
+  .listaUsuarios ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .listaUsuarios li {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff; /* Fundo branco para cada item */
+    border: 1px solid #ddd; /* Borda suave */
+    border-radius: 6px; /* Bordas arredondadas nos itens */
+    transition: background-color 0.3s ease; /* Transição suave para cor de fundo */
+  }
+  
+  .listaUsuarios li:hover {
+    background-color: #f1f1f1; /* Cor de fundo quando o item é passado o mouse */
+  }
+  
+  .listaUsuarios li strong {
+    font-weight: bold;
+    color: #2c3e50; /* Cor escura para o nome */
+  }
+  
+  .listaUsuarios p {
+    font-size: 14px;
+    color: #7f8c8d; /* Cor suave para o texto */
+  }
+  
