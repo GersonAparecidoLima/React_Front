@@ -4,18 +4,18 @@
     font-family: 'Arial', sans-serif;
     padding: 20px;
     color: black;
-    background-color: #f4f4f4; /* Fundo suave */
-    border-radius: 8px; /* Bordas arredondadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    max-width: 800px; /* Limita a largura */
-    margin: 30px auto; /* Centraliza o conteúdo */
+    background-color: #f4f4f4; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 30px auto;
   }
   
   .listaUsuarios h2 {
-    text-align: center; /* Centraliza o título */
+    text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333; /* Cor mais escura para o título */
+    color: #333;
   }
   
   .listaUsuarios ul {
@@ -27,23 +27,63 @@
   .listaUsuarios li {
     margin-bottom: 15px;
     padding: 10px;
-    background-color: #fff; /* Fundo branco para cada item */
-    border: 1px solid #ddd; /* Borda suave */
-    border-radius: 6px; /* Bordas arredondadas nos itens */
-    transition: background-color 0.3s ease; /* Transição suave para cor de fundo */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
   }
   
   .listaUsuarios li:hover {
-    background-color: #f1f1f1; /* Cor de fundo quando o item é passado o mouse */
+    background-color: #f1f1f1;
+  }
+  
+  .listaUsuarios li span {
+    display: inline-block;
+    width: 45%; /* Isso garante que cada coluna (nome e id) tenha o mesmo tamanho */
+    padding: 5px;
   }
   
   .listaUsuarios li strong {
     font-weight: bold;
-    color: #2c3e50; /* Cor escura para o nome */
+    color: #2c3e50;
   }
   
   .listaUsuarios p {
     font-size: 14px;
-    color: #7f8c8d; /* Cor suave para o texto */
+    color: #7f8c8d;
+  }
+  
+  /* Estilo do campo de input para filtro */
+  .inputFiltro {
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  .inputFiltro:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* Estilos para o cabeçalho da lista */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .headerItem {
+    width: 45%;
+    text-align: left;
   }
   

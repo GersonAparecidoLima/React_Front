@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Para pegar o ID da URL (caso esteja buscando um usuário específico)
-import style from './ListaUsuarios.module.scss'; // Verifique se o caminho está correto
+import { useParams } from 'react-router-dom';
+import style from './ListaUsuarios.module.scss';
 
-
-// Definindo o tipo dos dados que vamos receber do backend
 interface Usuario {
   id: string;
   nome: string;
@@ -13,16 +11,14 @@ function ListaUsuarios() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [erro, setErro] = useState<string>('');
   const [usuario, setUsuario] = useState<Usuario | null>(null);
-  const [loading, setLoading] = useState<boolean>(false); // Estado de carregamento
-  const { id } = useParams<{ id: string }>(); // Para capturar o parâmetro 'id' da URL, se existir
+  const [idFiltro, setIdFiltro] = useState<string>(''); // Estado para o filtro pelo ID
+  const { id } = useParams<{ id: string }>();
 
-  // Função para buscar todos os usuários
   const fetchUsuarios = async () => {
-    setLoading(true); // Ativa o carregamento
     try {
       const response = await fetch('http://localhost:3000/usuarios');
       if (!response.ok) {
-        throw new Error('Erro ao carregar a lista de usuários');
+        throw new Error('Erro ao carregar usuários');
       }
       const data = await response.json();
       setUsuarios(data);
@@ -32,14 +28,10 @@ function ListaUsuarios() {
       } else {
         setErro('Erro desconhecido');
       }
-    } finally {
-      setLoading(false); // Desativa o carregamento após a resposta
     }
   };
 
-  // Função para buscar um usuário específico por ID
   const fetchUsuarioPorId = async (id: string) => {
-    setLoading(true); // Ativa o carregamento
     try {
       const response = await fetch(`http://localhost:3000/usuarios/${id}`);
       if (!response.ok) {
@@ -53,51 +45,74 @@ function ListaUsuarios() {
       } else {
         setErro('Erro desconhecido');
       }
-    } finally {
-      setLoading(false); // Desativa o carregamento após a resposta
     }
   };
 
-  // Efeito para fazer a requisição assim que o componente for renderizado ou quando o ID mudar
+  const handleFiltroIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIdFiltro(event.target.value); // Atualiza o ID do filtro
+  };
+
   useEffect(() => {
     if (id) {
-      fetchUsuarioPorId(id); // Se houver ID na URL, busca o usuário específico
+      fetchUsuarioPorId(id);
     } else {
-      fetchUsuarios(); // Se não houver ID, busca todos os usuários
+      fetchUsuarios();
     }
   }, [id]);
+
+  const filteredUsuarios = idFiltro
+    ? usuarios.filter((usuario) =>
+        usuario.id.toLowerCase().includes(idFiltro.toLowerCase())
+      )
+    : usuarios;
 
   return (
     <div className={style.listaUsuarios}>
       <h2>{id ? `Usuário: ${usuario?.nome}` : 'Lista de Usuários'}</h2>
+      {erro && <p className="erro">{erro}</p>}
 
-      {erro && <p className="erro">{erro}</p>} {/* Exibe erro se houver */}
+      {/* Campo de Input para Filtro */}
+      <div>
+        <input
+          type="text"
+          value={idFiltro}
+          onChange={handleFiltroIdChange}
+          placeholder="Filtrar por ID"
+          className={style.inputFiltro}
+        />
+      </div>
 
-      {loading ? (
-        <p>Carregando...</p> // Exibe mensagem de carregamento enquanto a requisição está em andamento
-      ) : id ? (
-        // Caso esteja buscando um usuário específico, exibe o usuário encontrado
+      {id ? (
         usuario ? (
           <div>
             <p><strong>ID:</strong> {usuario.id}</p>
             <p><strong>Nome:</strong> {usuario.nome}</p>
           </div>
         ) : (
-          <p>Usuário não encontrado.</p> // Mensagem caso o usuário não seja encontrado
+          <p>Carregando o usuário...</p>
         )
       ) : (
-        // Caso contrário, exibe a lista de todos os usuários
-        <ul>
-          {usuarios.length > 0 ? (
-            usuarios.map((usuario) => (
-              <li key={usuario.id}>
-                <strong>{usuario.nome}</strong> (ID: {usuario.id})
-              </li>
-            ))
-          ) : (
-            <p>Nenhum usuário encontrado.</p>
-          )}
-        </ul>
+        <div>
+          {/* Cabeçalho da Tabela com os rótulos Nome e ID */}
+          <div className={style.header}>
+            <span className={style.headerItem}><strong>Nome</strong></span>
+            <span className={style.headerItem}><strong>ID</strong></span>
+          </div>
+
+          {/* Lista de Usuários */}
+          <ul>
+            {filteredUsuarios.length > 0 ? (
+              filteredUsuarios.map((usuario) => (
+                <li key={usuario.id}>
+                  <span>{usuario.nome}</span>
+                  <span>{usuario.id}</span>
+                </li>
+              ))
+            ) : (
+              <p>Nenhum usuário encontrado.</p>
+            )}
+          </ul>
+        </div>
       )}
     </div>
   );
